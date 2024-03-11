@@ -1,0 +1,28 @@
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+
+@* ここに JSComponent が mount される *@
+<div id="js-root" />
+
+@code {
+    private IJSObjectReference? jsModule;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            jsModule = await JS.InvokeAsync<IJSObjectReference>("import", "../js/index.js");
+
+            // export している JSコンポーネントを render する関数を呼び出す
+            await jsModule.InvokeVoidAsync("renderJSComponent");
+        }
+    }
+
+    async ValueTask IAsyncDisposable.DisposeAsync()
+    {
+        if (jsModule is not null)
+        {
+            await jsModule.DisposeAsync();
+        }
+    }
+}
