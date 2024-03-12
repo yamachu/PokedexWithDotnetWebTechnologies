@@ -9,5 +9,6 @@ public partial class MainPage : ContentPage
 
 		// Register the Blazor WebView component
 		blazorWebView.RootComponents.RegisterForJavaScript<Components.JSInterop.FetchPokemon>("FetchPokemon-react");
+		blazorWebView.RootComponents.RegisterForJavaScript<Components.JSInterop.CapturePokemon>("CapturePokemon-react");
 	}
 }
