@@ -6,7 +6,7 @@ using PokedexDotnet.Shared.Infrastructures;
 
 namespace PokedexDotnet.Shared.Usecases;
 
-public class TrainerPokedex
+public class CapturePokemon
 {
     public static async Task<int> Migration(SqliteConnection c)
     {
@@ -18,42 +18,48 @@ public class TrainerPokedex
     public static Task<int[]> FetchCapturedPokemons(SqliteConnectionWrapper dbHelper)
     {
         return dbHelper.AsyncBindConnection(
-            async (c) =>
-            {
-                var result = await c.QueryAsync<int>("select id from captured_pokemons");
-                return result.ToArray();
-            },
+            FetchCapturedPokemons,
             Task.FromException<int[]>(new Exception("Cannot fetch captured pokemons"))
         );
+    }
+
+    public static async Task<int[]> FetchCapturedPokemons(SqliteConnection connection)
+    {
+        var result = await connection.QueryAsync<int>("select id from captured_pokemons");
+        return result.ToArray();
     }
 
     public static Task<int /* affected rows */> PutCapturedPokemon(SqliteConnectionWrapper dbHelper, int id)
     {
         return dbHelper.AsyncBindConnection(
-            async (c) =>
-            {
-                using var command = c.CreateCommand();
-                command.CommandText = "insert or ignore into captured_pokemons (id) values (@ID)";
-                command.Parameters.Add(new SqliteParameter { SqliteType = SqliteType.Integer, Value = id, ParameterName = "@ID" });
-                var result = await command.ExecuteNonQueryAsync();
-                return result;
-            },
+            (c) => PutCapturedPokemon(c, id),
             Task.FromException<int>(new Exception("Cannot put captured pokemons"))
         );
+    }
+
+    public static async Task<int /* affected rows */> PutCapturedPokemon(SqliteConnection connection, int id)
+    {
+        using var command = connection.CreateCommand();
+        command.CommandText = "insert or ignore into captured_pokemons (id) values (@ID)";
+        command.Parameters.Add(new SqliteParameter { SqliteType = SqliteType.Integer, Value = id, ParameterName = "@ID" });
+        var result = await command.ExecuteNonQueryAsync();
+        return result;
     }
 
     public static Task<int /* affected rows */> DeleteCapturedPokemon(SqliteConnectionWrapper dbHelper, int id)
     {
         return dbHelper.AsyncBindConnection(
-            async (c) =>
-            {
-                using var command = c.CreateCommand();
-                command.CommandText = "delete from captured_pokemons where id = @ID";
-                command.Parameters.Add(new SqliteParameter { SqliteType = SqliteType.Integer, Value = id, ParameterName = "@ID" });
-                var result = await command.ExecuteNonQueryAsync();
-                return result;
-            },
+            (c) => DeleteCapturedPokemon(c, id),
             Task.FromException<int>(new Exception("Cannot delete captured pokemons"))
         );
+    }
+
+    public static async Task<int /* affected rows */> DeleteCapturedPokemon(SqliteConnection connection, int id)
+    {
+        using var command = connection.CreateCommand();
+        command.CommandText = "delete from captured_pokemons where id = @ID";
+        command.Parameters.Add(new SqliteParameter { SqliteType = SqliteType.Integer, Value = id, ParameterName = "@ID" });
+        var result = await command.ExecuteNonQueryAsync();
+        return result;
     }
 }
