@@ -8,14 +8,14 @@ using PokedexDotnet.Shared;
 
 public partial class FetchPokemon : BaseComponent<FetchPokemon>
 {
-    [Parameter] public Func<string>? DataSourceGetter { private get; set; }
+    [Parameter] public string? DataSource { private get; set; }
 
     [JSInvokable]
-    private async Task<Pokemon[]> FetchPokemons()
+    public async Task<Pokemon[]> FetchPokemons()
     {
-        if (DataSourceGetter == null) return Array.Empty<Pokemon>();
+        if (DataSource == null) return Array.Empty<Pokemon>();
 
-        var dbHelper = new SqliteConnectionWrapper(DataSourceGetter);
+        var dbHelper = new SqliteConnectionWrapper(() => DataSource);
         var pokemons = await PokedexDotnet.Shared.Usecases.QueryPokemon.FetchPokemons(dbHelper);
         return pokemons;
     }
