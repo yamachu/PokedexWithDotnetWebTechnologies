@@ -482,3 +482,10 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# Generated
+/src/PokedexDotnet.MAUIBlazor/wwwroot/js/*
+!/src/PokedexDotnet.MAUIBlazor/wwwroot/js/.gitkeep
+
+# Dont tarck raw resources
+src/PokedexDotnet.MAUIBlazor/Resources/Raw/pokemons.db
