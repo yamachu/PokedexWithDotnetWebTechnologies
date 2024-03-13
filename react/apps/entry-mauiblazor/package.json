@@ -10,5 +10,8 @@
   },
   "dependencies": {
     "@pokedex-dotnet-react/interop-mauiblazor": "*"
+  },
+  "devDependencies": {
+    "react-devtools": "5.0.2"
   }
 }
