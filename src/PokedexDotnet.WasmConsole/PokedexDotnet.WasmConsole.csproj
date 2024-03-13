@@ -4,6 +4,17 @@
     <RuntimeIdentifier>browser-wasm</RuntimeIdentifier>
     <OutputType>Exe</OutputType>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <WasmMainJSPath>main.mjs</WasmMainJSPath>
+    <WasmMainJSPath>package.json</WasmMainJSPath>
+    <GeneratedDistPath>$([System.IO.Path]::Combine($(MSBuildProjectDirectory),"..", "..", "js", "packages", "interop-wasmconsole.generated"))</GeneratedDistPath>
+    <WasmAppDir>$(GeneratedDistPath)</WasmAppDir>
   </PropertyGroup>
+
+  <!-- https://github.com/dotnet/runtime/blob/cbca5083d3e69f2bd25e397f8894d94d7763a13a/src/mono/wasm/build/README.md -->
+  <Target Name="CustomAfterPublish" AfterTargets="WasmTriggerPublishApp">
+    <ItemGroup>
+      <MySourceFiles Include="$(OutputPath)/dotnet.d.ts"/>
+    </ItemGroup>
+
+    <Copy SourceFiles="@(MySourceFiles)" DestinationFolder="$([System.IO.Path]::Combine($(GeneratedDistPath), '_framework'))"/>
+  </Target>
 </Project>
