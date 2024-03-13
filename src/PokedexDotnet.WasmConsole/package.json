@@ -1,0 +1,8 @@
+{
+  "name": "@pokedex-dotnet-js/interop-wasmconsole.generated",
+  "version": "1.0.0",
+  "license": "MIT",
+  "type": "module",
+  "main": "_framework/dotnet.js",
+  "types": "_framework/dotnet.d.ts"
+}
