@@ -1,0 +1,9 @@
+{
+  "name": "@pokedex-dotnet-react/interop-wasmconsole",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@pokedex-dotnet-js/interop-wasmconsole.generated": "*",
+    "@pokedex-dotnet-react/interop-shared": "*"
+  }
+}
