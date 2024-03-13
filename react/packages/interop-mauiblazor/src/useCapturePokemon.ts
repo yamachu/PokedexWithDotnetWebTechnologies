@@ -1,8 +1,8 @@
-import { type BlazorRenderFragment } from "@pokedex-dotnet-react/interop-shared/src/types/Blazor";
 import { type FunctionType } from "@pokedex-dotnet-react/interop-shared/src/useCapturePokemon";
 import React from "react";
 import { useBlazor } from "./hooks/useBlazor";
 import { useDotnetRef } from "./hooks/useDotnetRef";
+import { type BlazorRenderFragment } from "./types/ReturnTypes";
 
 export const useCapturePokemon: FunctionType<BlazorRenderFragment> = ({
   DataSourceGetter,
