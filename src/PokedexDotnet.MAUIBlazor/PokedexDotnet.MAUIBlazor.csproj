@@ -68,4 +68,16 @@
       <ProjectReference Include="..\PokedexDotnet.Shared\PokedexDotnet.Shared.csproj" />
     </ItemGroup>
 
+    <Target Name="CopyResources" BeforeTargets="ResGen">
+      <ItemGroup>
+        <MySourceFiles Include="$([System.IO.Path]::Combine($(MSBuildProjectDirectory),'..', '..', 'fixtures', 'sqlite', 'pokemons.db'))"/>
+      </ItemGroup>
+
+      <Copy SourceFiles="@(MySourceFiles)" DestinationFolder="$([System.IO.Path]::Combine($(MSBuildProjectDirectory),'Resources', 'Raw'))"/>
+
+      <ItemGroup>
+        <MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
+      </ItemGroup>
+    </Target>
+
 </Project>
