@@ -49,9 +49,9 @@ export const useCapturePokemon: FunctionType<BlazorRenderFragment> = ({
   );
 
   // See: src/PokedexDotnet.MAUIBlazor/MainPage.xaml.cs
-  // identifier: CapturePokemon-react
+  // identifier: capture-pokemon-react
   // BlazorComponent not accept function, so we need to pass the function result
-  const fragment = useBlazor("CapturePokemon", {
+  const fragment = useBlazor("capture-pokemon", {
     DataSource: DataSourceGetterValue,
     ...cbs,
   });

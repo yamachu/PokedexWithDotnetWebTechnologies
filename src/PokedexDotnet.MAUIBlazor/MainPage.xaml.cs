@@ -8,7 +8,8 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 
 		// Register the Blazor WebView component
-		blazorWebView.RootComponents.RegisterForJavaScript<Components.JSInterop.FetchPokemon>("FetchPokemon-react");
-		blazorWebView.RootComponents.RegisterForJavaScript<Components.JSInterop.CapturePokemon>("CapturePokemon-react");
+		// see: https://learn.microsoft.com/en-us/aspnet/core/blazor/components/js-spa-frameworks?view=aspnetcore-8.0#blazor-custom-elements
+		blazorWebView.RootComponents.RegisterForJavaScript<Components.JSInterop.FetchPokemon>("fetch-pokemon-react");
+		blazorWebView.RootComponents.RegisterForJavaScript<Components.JSInterop.CapturePokemon>("capture-pokemon-react");
 	}
 }
