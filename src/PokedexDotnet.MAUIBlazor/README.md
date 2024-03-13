@@ -80,6 +80,10 @@ C# 側では [DotNetObjectReference](https://learn.microsoft.com/en-us/dotnet/ap
 
 このプロジェクトでは、`BaseComponent` という実装するコンポーネントの基底クラスを作成し、`DotNetObjectReference` を保持するプロパティや、JavaScript 側にコールバックで参照を渡すための実装を提供しています。
 
+また `DotNetObjectReference` は .NET のインスタンスメソッドを呼び出すことに利用されるため、このプロジェクトでは Razor Components には static メソッドを実装していません。
+
+ref: [Invoke an instance .NET method](https://learn.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/call-dotnet-from-javascript?view=aspnetcore-8.0#invoke-an-instance-net-method)
+
 ### .NET から JavaScript の呼び出し
 
 .NET から JavaScript の呼び出しは、[EventCallback](https://learn.microsoft.com/en-us/dotnet/api/microsoft.aspnetcore.components.eventcallback?view=aspnetcore-8.0) に登録されたコールバックを実行することで行います。
