@@ -1,5 +1,9 @@
 import React from "react";
-import { type DotnetReference } from "./useBlazor";
+
+type DotnetReference = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  invokeMethodAsync(managedMethodName: string, ...args: any[]): Promise<any>;
+};
 
 export function useDotnetRef() {
   const [dotnetRef, setDotnetRef] = React.useState<DotnetReference | null>(
