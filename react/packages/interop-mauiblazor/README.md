@@ -7,7 +7,7 @@ PokedexDotnet.MAUIBlazor で提供されている Blazor custom elements を Rea
 [aspnet/samples](https://github.com/aspnet/samples/tree/main/samples/aspnetcore/blazor/JSComponentGeneration) で提供されているカスタムフックを使用しています。
 
 .NET MAUI Blazor Hybrid アプリで `RegisterForJavaScript` を使用して登録した indentifier を引数に取り、カスタムフックを呼び出している parentElement に対して、Blazor custom elements を追加しています。
-この identifier 引数は、`-react` を除いたものを使用します。
+この identifier 引数は、`-js` を除いたものを使用します。
 
 ```tsx
 const fragment = useBlazor('fetch-pokemon', { /* props */ });

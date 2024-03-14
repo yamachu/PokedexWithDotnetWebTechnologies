@@ -23,7 +23,7 @@ export const useFetchPokemon: FunctionType<BlazorRenderFragment> = ({
   );
 
   // See: src/PokedexDotnet.MAUIBlazor/MainPage.xaml.cs
-  // identifier: fetch-pokemon-react
+  // identifier: fetch-pokemon-js
   // BlazorComponent not accept function, so we need to pass the function result
   const fragment = useBlazor("fetch-pokemon", {
     DataSource: DataSourceGetterValue,

@@ -19,7 +19,7 @@ ref: [Use Razor components in JavaScript apps and SPA frameworks](https://learn.
 
 これに習い、コードビハインドから `RootComponents` プロパティに `RootComponent` を登録します。
 
-以下のコードは、`FetchPokemon` コンポーネントを `fetch-pokemon-react` という名前で登録する例です。
+以下のコードは、`FetchPokemon` コンポーネントを `fetch-pokemon-js` という名前で登録する例です。
 
 MainPage.xaml.cs
 ```csharp
@@ -33,11 +33,11 @@ public MainPage()
     InitializeComponent();
 
     // Add this
-    blazorWebView.RootComponents.RegisterForJavaScript<Components.JSInterop.FetchPokemon>("fetch-pokemon-react");
+    blazorWebView.RootComponents.RegisterForJavaScript<Components.JSInterop.FetchPokemon>("fetch-pokemon-js");
 }
 ```
 
-これにより、Blazor 環境下の JavaScript アプリケーションから、`fetch-pokemon-react` という名前で `FetchPokemon` コンポーネントを呼び出すことが出来るようになります。
+これにより、Blazor 環境下の JavaScript アプリケーションから、`fetch-pokemon-js` という名前で `FetchPokemon` コンポーネントを呼び出すことが出来るようになります。
 
 ### JavaScript からのコンポーネントの呼び出し
 
