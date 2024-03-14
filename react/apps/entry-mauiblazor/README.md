@@ -2,6 +2,11 @@
 
 PokedexDotnet.MAUIBlazor で提供されている Blazor custom elements を React で利用したサンプルアプリ。
 
+## 注意
+
+`App.tsx` 内で呼び出している `useFetchPokemon` の `DataSourceGetter` のパスは、現在 macOS でのみ動作するようになっています。
+使用する OS に合わせたパスに変更してください。
+
 ## エントリーポイントの提供
 
 .NET MAUI Blazor Hybrid の `ViewRoot.razor` で実行している関数を、React のアプリケーションの実行におけるエントリーポイントとして提供します。
