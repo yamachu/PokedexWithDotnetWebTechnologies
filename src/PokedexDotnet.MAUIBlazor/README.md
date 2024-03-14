@@ -41,7 +41,13 @@ public MainPage()
 
 ### JavaScript からのコンポーネントの呼び出し
 
+#### React
+
 see: [@pokedex-dotnet-react/interop-mauiblazor](../../react/packages/interop-mauiblazor/README.md)
+
+#### Vue
+
+see: [@pokedex-dotnet-vue/interop-mauiblazor](../../vue/packages/interop-mauiblazor/README.md)
 
 ## JavaScript との相互運用
 
@@ -100,15 +106,17 @@ using Microsoft.JSInterop;
 [Parameter] public EventCallback<DotNetObjectReference<T>> OnComponentInitializedCb { get; set; }
 ```
 
-## .NET MAUI Blazor Hybrid から React アプリケーションを呼び出す
+## .NET MAUI Blazor Hybrid から JavaScript アプリケーションを呼び出す
 
-.NET MAUI Blazor Hybrid から React アプリケーションのような、UI を伴う JavaScript アプリケーションを呼び出すことが出来ます。
+.NET MAUI Blazor Hybrid から React / Vue.js アプリケーションのような、UI を伴う JavaScript アプリケーションを呼び出すことが出来ます。
 
 ref: [JavaScript libraries that render UI](https://learn.microsoft.com/en-us/aspnet/core/blazor/javascript-interoperability/call-javascript-from-dotnet?view=aspnetcore-8.0#javascript-libraries-that-render-ui)
 
-このプロジェクトでは、BlazorWebView の RootComponent として呼び出される `ViewRoot.razor` に空の `div` 要素を配置し、その `div` 要素に対して React アプリケーションをマウントすることで、React アプリケーションを呼び出しています。
+このプロジェクトでは、BlazorWebView の RootComponent として呼び出される `ViewRoot.razor` に空の `div` 要素を配置し、その `div` 要素に対して JavaScript アプリケーションをマウントすることで、JavaScript アプリケーションを呼び出しています。
 
-[@pokedex-dotnet-react/entry-mauiblazor](../../react/apps/entry-mauiblazor) のビルド成果物を、`wwwroot/js` ディレクトリに配置し、[`IJSRuntime.InvokeAsync`](https://learn.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsruntime.invokeasync?view=aspnetcore-8.0) メソッドを利用して、モジュールの読み込みと React アプリケーションのマウント関数の実行を行っています。
+例えば [@pokedex-dotnet-react/entry-mauiblazor](../../react/apps/entry-mauiblazor) のビルド成果物を、`wwwroot/js` ディレクトリに配置し、[`IJSRuntime.InvokeAsync`](https://learn.microsoft.com/en-us/dotnet/api/microsoft.jsinterop.ijsruntime.invokeasync?view=aspnetcore-8.0) メソッドを利用して、モジュールの読み込みと React アプリケーションのマウント関数の実行を行っています。
+
+これは Vue.js のアプリケーションでも同様です。
 
 ## Blazor custom elements のデバッグ
 
