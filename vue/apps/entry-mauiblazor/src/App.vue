@@ -1,30 +1,87 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import { useCapturePokemon } from "@pokedex-dotnet-vue/interop-mauiblazor/src/useCapturePokemon";
+import { useFetchPokemon } from "@pokedex-dotnet-vue/interop-mauiblazor/src/useFetchPokemon";
+import { getCurrentInstance, ref, watch } from "vue";
+
+type Pokemons = Awaited<
+  ReturnType<ReturnType<typeof useFetchPokemon>["fetchPokemons"]["value"]>
+>;
+
+const { fetchPokemons, fragment: fetchPokemonRender } = useFetchPokemon({
+  instance: getCurrentInstance()!,
+  DataSourceGetter: () => "Data Source=./Contents/Resources/pokemons.db",
+});
+const {
+  migration,
+  deleteCapturedPokemon,
+  fetchCapturedPokemons,
+  putCapturedPokemon,
+  fragment: fetchCapturedPokemonRender,
+} = useCapturePokemon({
+  instance: getCurrentInstance()!,
+  DataSourceGetter: () => "this value not used in .NET MAUI Blazor",
+});
+
+const pokemons = ref<Pokemons>([]);
+const capturedPokemonIds = ref<number[]>([]);
+
+watch(fetchPokemons, () => {
+  fetchPokemons.value().then((v) => {
+    pokemons.value = v;
+  });
+});
+watch(migration, () => {
+  migration.value();
+})
+watch(fetchCapturedPokemons, () =>
+  fetchCapturedPokemons.value().then((v) => {
+    capturedPokemonIds.value = v;
+  })
+);
+
+const putCaptured = async (id: number) => {
+  await putCapturedPokemon.value(id);
+  capturedPokemonIds.value = await fetchCapturedPokemons.value();
+};
+
+const deleteCaptured = async (id: number) => {
+  await deleteCapturedPokemon.value(id);
+  capturedPokemonIds.value = await fetchCapturedPokemons.value();
+};
 </script>
 
 <template>
+  <h1>Vite + Vue + .NET MAUI Blazor</h1>
+  <h2>From .NET!</h2>
+  <ul>
+    <li
+      v-for="pokemon in pokemons"
+      :key="pokemon.id"
+      style="list-style: none"
+      @click="
+        () =>
+          capturedPokemonIds.some((c) => c === pokemon.id)
+            ? deleteCaptured(pokemon.id)
+            : putCaptured(pokemon.id)
+      "
+    >
+      <span
+        :style="{
+          paddingRight: '8px',
+          color: capturedPokemonIds.some((c) => c === pokemon.id)
+            ? 'red'
+            : 'gray',
+        }"
+      >
+        ●
+      </span>
+      {{ ("000" + pokemon.id).slice(-3) }}: {{ pokemon.name }}
+    </li>
+  </ul>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <fetchPokemonRender />
   </div>
-  <HelloWorld msg="Vite + Vue" />
+  <div>
+    <fetchCapturedPokemonRender />
+  </div>
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>

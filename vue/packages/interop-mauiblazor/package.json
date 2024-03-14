@@ -1,0 +1,8 @@
+{
+  "name": "@pokedex-dotnet-vue/interop-mauiblazor",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "@pokedex-dotnet-vue/interop-shared": "*"
+  }
+}
