@@ -31,7 +31,7 @@ PokedexDotnet.MAUIBlazor で提供されている Blazor custom elements を Rea
 
 詳細: [@pokedex-dotnet-react/interop-mauiblazor](./react/packages/interop-mauiblazor/README.md)
 
-### pokedex-dotnet-react/entry-mauiblazor
+### @pokedex-dotnet-react/entry-mauiblazor
 
 PokedexDotnet.MAUIBlazor で提供されている Blazor custom elements を React で利用したサンプルアプリ。
 .NET MAUI Blazor Hybrid の WebView における JavaScript 相互運用レイヤーから呼び出されるエントリーポイントを提供しています。
