@@ -486,6 +486,8 @@ $RECYCLE.BIN/
 # Generated
 /src/PokedexDotnet.MAUIBlazor/wwwroot/js/*
 !/src/PokedexDotnet.MAUIBlazor/wwwroot/js/.gitkeep
+/src/PokedexDotnet.Experimental.HybridWebView/Resources/Raw/hybrid_root
 
 # Dont tarck raw resources
 src/PokedexDotnet.MAUIBlazor/Resources/Raw/pokemons.db
+/src/PokedexDotnet.Experimental.HybridWebView/Resources/Raw/pokemons.db
