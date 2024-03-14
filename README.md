@@ -25,7 +25,7 @@ DB 操作の処理を .NET で実装し、処理のユースケース単位で B
 ### @pokedex-dotnet-react/interop-mauiblazor
 
 PokedexDotnet.MAUIBlazor で提供されている Blazor custom elements を React で利用するためのラッパーライブラリ。
-[aspnet/sample](https://github.com/aspnet/samples/tree/main/samples/aspnetcore/blazor/JSComponentGeneration) で提供されている、Blazor custom elements を React で利用するカスタムフックをベースとし、Blazor custom elements に対して Props を渡したり、イベントを受け取るためのカスタムフックを提供しています。
+[aspnet/samples](https://github.com/aspnet/samples/tree/main/samples/aspnetcore/blazor/JSComponentGeneration) で提供されている、Blazor custom elements を React で利用するカスタムフックをベースとし、Blazor custom elements に対して Props を渡したり、イベントを受け取るためのカスタムフックを提供しています。
 
 このプロジェクトで、Blazor custom elements を React で利用する方法を学ぶことが出来ます。
 
@@ -39,6 +39,24 @@ PokedexDotnet.MAUIBlazor で提供されている Blazor custom elements を Rea
 このプロジェクトで、.NET MAUI Blazor Hybrid から呼び出し可能なエントリーポイントの実装方法を学ぶことが出来ます。
 
 詳細: [@pokedex-dotnet-react/entry-mauiblazor](./react/apps/entry-mauiblazor/README.md)
+
+### @pokedex-dotnet-vue/interop-mauiblazor
+
+PokedexDotnet.MAUIBlazor で提供されている Blazor custom elements を Vue.js で利用するためのラッパーライブラリ。
+[yamachu/aspnet-samples](https://github.com/yamachu/aspnet-samples/commit/e2f216267fa6201071a426e016cded16ef93a4be) で試験的に実装した、Blazor custom elements を Vue.js で利用する Composable 関数をベースとし、Blazor custom elements に対して Props を渡したり、イベントを受け取るための Composable 関数を提供しています。
+
+このプロジェクトで、Blazor custom elements を Vue.js で利用する方法を学ぶことが出来ます。
+
+詳細: [@pokedex-dotnet-vue/interop-mauiblazor](./vue/packages/interop-mauiblazor/README.md)
+
+### @pokedex-dotnet-vue/entry-mauiblazor
+
+PokedexDotnet.MAUIBlazor で提供されている Blazor custom elements を Vue.js で利用したサンプルアプリ。
+.NET MAUI Blazor Hybrid の WebView における JavaScript 相互運用レイヤーから呼び出されるエントリーポイントを提供しています。
+
+このプロジェクトで、.NET MAUI Blazor Hybrid から呼び出し可能なエントリーポイントの実装方法を学ぶことが出来ます。
+
+詳細: [@pokedex-dotnet-vue/entry-mauiblazor](./vue/apps/entry-mauiblazor/README.md)
 
 ### PokedexDotnet.WasmConsole
 

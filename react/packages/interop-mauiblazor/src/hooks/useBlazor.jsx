@@ -30,7 +30,7 @@ export function useBlazor(identifier, props) {
     // it can throw off React's DOM management.
     addRootComponentPromiseRef.current = Promise.resolve().then(() => {
       // eslint-disable-next-line no-undef
-      return Blazor.rootComponents.add(parentElement, `${identifier}-react`, props);
+      return Blazor.rootComponents.add(parentElement, `${identifier}-js`, props);
     }).then((rootComponent) => {
       hasPendingSetParametersRef.current = false;
       return rootComponent;

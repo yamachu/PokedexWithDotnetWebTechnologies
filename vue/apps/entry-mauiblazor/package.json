@@ -1,0 +1,14 @@
+{
+  "name": "@pokedex-dotnet-vue/entry-mauiblazor",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@pokedex-dotnet-vue/interop-mauiblazor": "*"
+  }
+}
