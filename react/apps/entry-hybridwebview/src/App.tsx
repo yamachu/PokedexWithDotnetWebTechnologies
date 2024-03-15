@@ -25,7 +25,6 @@ function App() {
 
   useEffect(() => {
     fetchPokemons().then((pokemons) => {
-      console.log(pokemons);
       setPokemons(pokemons);
     });
   }, [fetchPokemons]);
@@ -36,7 +35,6 @@ function App() {
 
   useEffect(() => {
     fetchCapturedPokemons().then((ids) => {
-      console.log(ids);
       setCapturedPokemonIds(ids);
     });
   }, [fetchCapturedPokemons]);
