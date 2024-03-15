@@ -1,6 +1,6 @@
 # Pokedex with .NET Web Technologies
 
-このプロジェクトは、[.NET MAUI Blazor Hybrid](https://learn.microsoft.com/en-us/aspnet/core/blazor/hybrid/?view=aspnetcore-8.0) における [Blazor custom elements](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/js-spa-frameworks?view=aspnetcore-8.0#blazor-custom-elements) や [.NET JavaScript interop on WebAssembly](https://learn.microsoft.com/en-us/aspnet/core/client-side/dotnet-interop?view=aspnetcore-8.0) などの .NET Web 技術を使った Pokedex を題材としたサンプルプロジェクトです。
+このプロジェクトは、[.NET MAUI Blazor Hybrid](https://learn.microsoft.com/en-us/aspnet/core/blazor/hybrid/?view=aspnetcore-8.0) における [Blazor custom elements](https://learn.microsoft.com/en-us/aspnet/core/blazor/components/js-spa-frameworks?view=aspnetcore-8.0#blazor-custom-elements) や [.NET JavaScript interop on WebAssembly](https://learn.microsoft.com/en-us/aspnet/core/client-side/dotnet-interop?view=aspnetcore-8.0) また [HybridWebView(experimental)](https://github.com/Eilon/MauiHybridWebView) などの .NET Web 技術を使った Pokedex を題材としたサンプルプロジェクトです。
 
 JavaScript ベースの SPA フレームワーク（ライブラリ）である React や Vue.js を View に採用し、コアロジックを .NET で実装する構成を想定しています。
 
@@ -22,6 +22,15 @@ DB 操作の処理を .NET で実装し、処理のユースケース単位で B
 
 詳細: [PokedexDotnet.MAUIBlazor](./src/PokedexDotnet.MAUIBlazor/README.md)
 
+### PokedexDotnet.Experimental.HybridWebView
+
+.NET MAUI Blazor Hybrid で作成された、SQLite3 を DB のバックエンドとして利用する Pokedex アプリ。
+DB 操作の処理を .NET で実装し、View から HybridWebView 経由で処理を呼び出すインタフェースを提供しています。
+
+このプロジェクトで、View を JavaScript で実装し、.NET で実装したコアロジックを HybridWebView 経由で呼び出す方法を学ぶことが出来ます。
+
+詳細: [PokedexDotnet.Experimental.HybridWebView](./src/PokedexDotnet.Experimental.HybridWebView/README.md)
+
 ### @pokedex-dotnet-react/interop-mauiblazor
 
 PokedexDotnet.MAUIBlazor で提供されている Blazor custom elements を React で利用するためのラッパーライブラリ。
@@ -39,6 +48,24 @@ PokedexDotnet.MAUIBlazor で提供されている Blazor custom elements を Rea
 このプロジェクトで、.NET MAUI Blazor Hybrid から呼び出し可能なエントリーポイントの実装方法を学ぶことが出来ます。
 
 詳細: [@pokedex-dotnet-react/entry-mauiblazor](./react/apps/entry-mauiblazor/README.md)
+
+### @pokedex-dotnet-react/interop-hybridwebview
+
+PokedexDotnet.Experimental.HybridWebView で提供されている HybridWebView を React で利用するためのラッパーライブラリ。
+ビルド時にバンドルされる HybridWebView の JavaScript ライブラリを React で利用するためのカスタムフックを提供しています。
+
+このプロジェクトで、HybridWebView を React で利用する方法を学ぶことが出来ます。
+
+詳細: [@pokedex-dotnet-react/interop-hybridwebview](./react/packages/interop-hybridwebview/README.md)
+
+### @pokedex-dotnet-react/entry-hybridwebview
+
+PokedexDotnet.Experimental.HybridWebView で提供されている HybridWebView を React で利用したサンプルアプリ。
+HybridWebView から呼び出されるエントリーポイントを提供しています。
+
+このプロジェクトで、HybridWebView から呼び出し可能なエントリーポイントの実装方法を学ぶことが出来ます。
+
+詳細: [@pokedex-dotnet-react/entry-hybridwebview](./react/apps/entry-hybridwebview/README.md)
 
 ### @pokedex-dotnet-vue/interop-mauiblazor
 
