@@ -113,6 +113,13 @@ $ sudo dotnet workload restore
 - [Build a .NET MAUI Blazor Hybrid app](https://learn.microsoft.com/en-us/aspnet/core/blazor/hybrid/tutorials/maui?view=aspnetcore-8.0)
 - [Run .NET from JavaScript](https://learn.microsoft.com/en-us/aspnet/core/client-side/dotnet-interop?view=aspnetcore-8.0)
 
+## 関連プロジェクト
+
+- https://github.com/yamachu/pokedex-net-webassembly-without-blazor
+  - .NET JavaScript interop on WebAssembly の技術を利用した .NET ライブラリを React や Node.js で利用するためのサンプルプロジェクト
+- https://github.com/yamachu/BlazorWithReactSample
+  - Component Tag Helper を利用して、Blazor custom elements を React で利用するためのコードを生成し、利用するためのサンプルプロジェクト
+
 ## ライセンス
 
 このプロジェクトは MIT ライセンスの元で公開されています。
