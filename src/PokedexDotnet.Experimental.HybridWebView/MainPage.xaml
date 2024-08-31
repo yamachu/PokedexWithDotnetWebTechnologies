@@ -1,10 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:ejl="clr-namespace:HybridWebView;assembly=HybridWebView"
              x:Class="PokedexDotnet.Experimental.HybridWebView.MainPage"
              BackgroundColor="{DynamicResource PageBackgroundColor}">
 
-    <ejl:HybridWebView HybridAssetRoot="hybrid_root" x:Name="myHybridWebView" />
+    <HybridWebView
+        HybridRoot="hybrid_root"
+        RawMessageReceived="OnHybridWebViewRawMessageReceived"
+        x:Name="myHybridWebView"/>
 
 </ContentPage>

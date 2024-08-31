@@ -10,10 +10,16 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 
 #if DEBUG
-		myHybridWebView.EnableWebDevTools = true;
+		// see: https://github.com/dotnet/maui/issues/22305
+		// Debug Switch is not implemented yet...
 #endif
 
-		myHybridWebView.JSInvokeTarget = new JSInvokeTarget();
+	}
+
+	private void OnHybridWebViewRawMessageReceived(object sender, HybridWebViewRawMessageReceivedEventArgs e)
+	{
+		var message = e.Message;
+		// TODO: Implement message handling
 	}
 
 	private sealed class JSInvokeTarget()
