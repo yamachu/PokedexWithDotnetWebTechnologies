@@ -3,32 +3,32 @@ import React from "react";
 import { useHybridWebView } from "./hooks/useHybridWebView";
 
 export const useCapturePokemon: FunctionType = ({ DataSourceGetter }) => {
-  const {
-    sendInvokeMessageToDotNetAsync,
-    sendInvokeMessageToDotNet,
-    sendInvokeMessageToDotNetAsyncTask,
-  } = useHybridWebView();
+  const { sendInvokeMessageToDotNetAsync } = useHybridWebView();
 
   const fetchCapturedPokemons = React.useCallback((): Promise<number[]> => {
-    return sendInvokeMessageToDotNetAsyncTask("FetchCapturedPokemons", []).then(
-      (v) => v.Result
+    return sendInvokeMessageToDotNetAsync("FetchCapturedPokemons", []).then(
+      (v) => v as number[]
     );
   }, [sendInvokeMessageToDotNetAsync]);
 
   const migration = React.useCallback((): Promise<void> => {
-    return sendInvokeMessageToDotNetAsync("Migration", []);
+    return sendInvokeMessageToDotNetAsync("Migration", []).then(() => {});
   }, [sendInvokeMessageToDotNetAsync]);
 
   const putCapturedPokemon = React.useCallback(
     (id: number): Promise<void> => {
-      return sendInvokeMessageToDotNetAsync("PutCapturedPokemon", [id]);
+      return sendInvokeMessageToDotNetAsync("PutCapturedPokemon", [id]).then(
+        () => {}
+      );
     },
     [sendInvokeMessageToDotNetAsync]
   );
 
   const deleteCapturedPokemon = React.useCallback(
     (id: number): Promise<void> => {
-      return sendInvokeMessageToDotNetAsync("DeleteCapturedPokemon", [id]);
+      return sendInvokeMessageToDotNetAsync("DeleteCapturedPokemon", [id]).then(
+        () => {}
+      );
     },
     [sendInvokeMessageToDotNetAsync]
   );
@@ -40,11 +40,11 @@ export const useCapturePokemon: FunctionType = ({ DataSourceGetter }) => {
 
   React.useEffect(
     function InitializeDataSource() {
-      sendInvokeMessageToDotNet("SetCaptureDataSourceGetter", [
+      sendInvokeMessageToDotNetAsync("SetCaptureDataSourceGetter", [
         DataSourceGetterValue,
       ]);
     },
-    [DataSourceGetterValue, sendInvokeMessageToDotNet]
+    [DataSourceGetterValue, sendInvokeMessageToDotNetAsync]
   );
 
   return {

@@ -14,11 +14,21 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 			});
 
-		// https://github.com/Eilon/MauiHybridWebView/tree/main?tab=readme-ov-file#getting-started
-		builder.Services.AddHybridWebView();
-
 #if DEBUG
 		builder.Logging.AddDebug();
+#endif
+
+		// https://github.com/dotnet/maui/issues/24497#issuecomment-2316706114
+#if MACCATALYST
+		Microsoft.Maui.Handlers.HybridWebViewHandler.Mapper.AppendToMapping("Inspect", (handler, view) =>
+		{
+			if (OperatingSystem.IsMacCatalystVersionAtLeast(16, 4))
+			{
+				handler.PlatformView.Inspectable = true;
+				// For older versions .NET Mac Versions that don't include the Inspectable field.
+				// handler.PlatformView.SetValueForKey(Foundation.NSObject.FromObject(true), new Foundation.NSString("inspectable"));
+			}
+		});
 #endif
 
 		return builder.Build();
