@@ -14,7 +14,7 @@ declare global {
 export const useHybridWebView = () => {
   const sendInvokeMessageToDotNetAsync = useCallback(
     (methodName: string, paramValues: any[]) => {
-      const timestamp = performance.now();
+      const timestamp = Math.trunc(performance.now());
       window.HybridWebView.SendRawMessage(
         JSON.stringify({ timestamp, methodName, paramValues })
       );
