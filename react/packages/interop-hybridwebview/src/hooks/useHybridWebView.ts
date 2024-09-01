@@ -5,49 +5,39 @@ declare global {
   interface Window {
     HybridWebView: HybridWebViewType;
   }
+
+  interface WindowEventMap {
+    HybridWebViewMessageReceived: CustomEvent<{ message: string }>;
+  }
 }
 
-// BasedType: https://learn.microsoft.com/ja-jp/dotnet/api/system.threading.tasks.task?view=net-8.0
-type DotnetTaskResult = {
-  Result: any;
-};
-
 export const useHybridWebView = () => {
-  const sendRawMessageToDotNet = useCallback((message: string) => {
-    window.HybridWebView.SendRawMessageToDotNet(message);
-  }, []);
-
-  const sendInvokeMessageToDotNet = useCallback(
-    (methodName: string, paramValues: any[]) => {
-      window.HybridWebView.SendInvokeMessageToDotNet(methodName, paramValues);
-    },
-    []
-  );
-
   const sendInvokeMessageToDotNetAsync = useCallback(
     (methodName: string, paramValues: any[]) => {
-      return window.HybridWebView.SendInvokeMessageToDotNetAsync(
-        methodName,
-        paramValues
+      const timestamp = performance.now();
+      window.HybridWebView.SendRawMessage(
+        JSON.stringify({ timestamp, methodName, paramValues })
       );
-    },
-    []
-  );
-
-  const sendInvokeMessageToDotNetAsyncTask = useCallback(
-    (methodName: string, paramValues: any[]): Promise<DotnetTaskResult> => {
-      return window.HybridWebView.SendInvokeMessageToDotNetAsync(
-        methodName,
-        paramValues
-      );
+      return new Promise((resolve) => {
+        const cb: Parameters<
+          typeof addEventListener<"HybridWebViewMessageReceived">
+        >[1] = (ev) => {
+          const parsedMessage = JSON.parse(ev.detail.message);
+          if (
+            parsedMessage.timestamp === timestamp &&
+            parsedMessage.methodName === methodName
+          ) {
+            window.removeEventListener("HybridWebViewMessageReceived", cb);
+            resolve(parsedMessage.value);
+          }
+        };
+        window.addEventListener("HybridWebViewMessageReceived", cb);
+      });
     },
     []
   );
 
   return {
-    sendRawMessageToDotNet,
-    sendInvokeMessageToDotNet,
     sendInvokeMessageToDotNetAsync,
-    sendInvokeMessageToDotNetAsyncTask,
   };
 };
