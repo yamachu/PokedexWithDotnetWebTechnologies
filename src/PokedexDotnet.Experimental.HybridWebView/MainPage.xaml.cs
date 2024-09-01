@@ -3,8 +3,12 @@
 using PokedexDotnet.Shared.Infrastructures;
 using PokedexDotnet.Shared;
 
+using System.Text.Json;
+
 public partial class MainPage : ContentPage
 {
+	private readonly JSInvokeTarget invokeTarget;
+
 	public MainPage()
 	{
 		InitializeComponent();
@@ -14,12 +18,51 @@ public partial class MainPage : ContentPage
 		// Debug Switch is not implemented yet...
 #endif
 
+		this.invokeTarget = new JSInvokeTarget();
 	}
 
 	private void OnHybridWebViewRawMessageReceived(object sender, HybridWebViewRawMessageReceivedEventArgs e)
 	{
 		var message = e.Message;
-		// TODO: Implement message handling
+		var methodName = JsonDocument.Parse(message).RootElement.GetProperty("methodName").GetString();
+		var timestamp = JsonDocument.Parse(message).RootElement.GetProperty("timestamp").GetInt32();
+
+		switch (methodName)
+		{
+			case "SetDataSourceGetter":
+				var dataSource = JsonDocument.Parse(message).RootElement.GetProperty("paramValues").EnumerateArray().First().GetString();
+				invokeTarget.SetDataSourceGetter(dataSource);
+				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName }));
+				break;
+			case "SetCaptureDataSourceGetter":
+				var captureDataSource = JsonDocument.Parse(message).RootElement.GetProperty("paramValues").EnumerateArray().First().GetString();
+				invokeTarget.SetCaptureDataSourceGetter(captureDataSource);
+				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName }));
+				break;
+			case "FetchPokemons":
+				var pokemons = invokeTarget.FetchPokemons().Result;
+				var json = JsonSerializer.Serialize(new { timestamp, methodName, value = pokemons });
+				myHybridWebView.SendRawMessage(json);
+				break;
+			case "Migration":
+				invokeTarget.Migration().Wait();
+				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName }));
+				break;
+			case "FetchCapturedPokemons":
+				var capturedPokemonIds = invokeTarget.FetchCapturedPokemons().Result;
+				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName, value = capturedPokemonIds }));
+				break;
+			case "PutCapturedPokemon":
+				var id = JsonDocument.Parse(message).RootElement.GetProperty("paramValues").EnumerateArray().First().GetInt32();
+				invokeTarget.PutCapturedPokemon(id).Wait();
+				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName }));
+				break;
+			case "DeleteCapturedPokemon":
+				var deleteId = JsonDocument.Parse(message).RootElement.GetProperty("paramValues").EnumerateArray().First().GetInt32();
+				invokeTarget.DeleteCapturedPokemon(deleteId).Wait();
+				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName }));
+				break;
+		}
 	}
 
 	private sealed class JSInvokeTarget()
