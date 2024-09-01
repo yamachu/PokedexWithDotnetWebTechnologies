@@ -25,7 +25,7 @@ public partial class MainPage : ContentPage
 	{
 		var message = e.Message;
 		var methodName = JsonDocument.Parse(message).RootElement.GetProperty("methodName").GetString();
-		var timestamp = JsonDocument.Parse(message).RootElement.GetProperty("timestamp").GetInt32();
+		var timestamp = JsonDocument.Parse(message).RootElement.GetProperty("timestamp").GetString();
 
 		switch (methodName)
 		{
