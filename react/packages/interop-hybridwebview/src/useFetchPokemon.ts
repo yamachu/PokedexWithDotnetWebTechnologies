@@ -4,18 +4,17 @@ import React from "react";
 import { useHybridWebView } from "./hooks/useHybridWebView";
 
 export const useFetchPokemon: FunctionType = ({ DataSourceGetter }) => {
-  const {
-    sendInvokeMessageToDotNetAsync,
-    sendInvokeMessageToDotNet,
-    sendInvokeMessageToDotNetAsyncTask,
-  } = useHybridWebView();
+  const { sendInvokeMessageToDotNetAsync } = useHybridWebView();
 
   const fetchPokemons = React.useCallback((): Promise<Pokemon[]> => {
-    return sendInvokeMessageToDotNetAsyncTask("FetchPokemons", [])
-      .then((v) => v.Result)
-      .then((pokemons) =>
-        pokemons.map((p: any) => ({ id: p.Id, name: p.Name }))
-      );
+    return sendInvokeMessageToDotNetAsync("FetchPokemons", []).then(
+      (pokemons) => {
+        return (pokemons as any as any[]).map((p: any) => ({
+          id: p.Id,
+          name: p.Name,
+        }));
+      }
+    );
   }, [sendInvokeMessageToDotNetAsync]);
 
   const DataSourceGetterValue = React.useMemo(
@@ -25,9 +24,11 @@ export const useFetchPokemon: FunctionType = ({ DataSourceGetter }) => {
 
   React.useEffect(
     function InitializeDataSource() {
-      sendInvokeMessageToDotNet("SetDataSourceGetter", [DataSourceGetterValue]);
+      sendInvokeMessageToDotNetAsync("SetDataSourceGetter", [
+        DataSourceGetterValue,
+      ]);
     },
-    [DataSourceGetterValue, sendInvokeMessageToDotNet]
+    [DataSourceGetterValue, sendInvokeMessageToDotNetAsync]
   );
 
   return { fetchPokemons };
