@@ -21,7 +21,7 @@ public partial class MainPage : ContentPage
 		this.invokeTarget = new JSInvokeTarget();
 	}
 
-	private void OnHybridWebViewRawMessageReceived(object sender, HybridWebViewRawMessageReceivedEventArgs e)
+	private async void OnHybridWebViewRawMessageReceived(object sender, HybridWebViewRawMessageReceivedEventArgs e)
 	{
 		var message = e.Message;
 		var methodName = JsonDocument.Parse(message).RootElement.GetProperty("methodName").GetString();
@@ -40,26 +40,26 @@ public partial class MainPage : ContentPage
 				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName }));
 				break;
 			case "FetchPokemons":
-				var pokemons = invokeTarget.FetchPokemons().Result;
+				var pokemons = await invokeTarget.FetchPokemons();
 				var json = JsonSerializer.Serialize(new { timestamp, methodName, value = pokemons });
 				myHybridWebView.SendRawMessage(json);
 				break;
 			case "Migration":
-				invokeTarget.Migration().Wait();
+				await invokeTarget.Migration();
 				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName }));
 				break;
 			case "FetchCapturedPokemons":
-				var capturedPokemonIds = invokeTarget.FetchCapturedPokemons().Result;
+				var capturedPokemonIds = await invokeTarget.FetchCapturedPokemons();
 				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName, value = capturedPokemonIds }));
 				break;
 			case "PutCapturedPokemon":
 				var id = JsonDocument.Parse(message).RootElement.GetProperty("paramValues").EnumerateArray().First().GetInt32();
-				invokeTarget.PutCapturedPokemon(id).Wait();
+				await invokeTarget.PutCapturedPokemon(id);
 				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName }));
 				break;
 			case "DeleteCapturedPokemon":
 				var deleteId = JsonDocument.Parse(message).RootElement.GetProperty("paramValues").EnumerateArray().First().GetInt32();
-				invokeTarget.DeleteCapturedPokemon(deleteId).Wait();
+				await invokeTarget.DeleteCapturedPokemon(deleteId);
 				myHybridWebView.SendRawMessage(JsonSerializer.Serialize(new { timestamp, methodName }));
 				break;
 		}
