@@ -16,6 +16,7 @@ public static class MauiProgram
 
 #if DEBUG
 		builder.Logging.AddDebug();
+		builder.Services.AddHybridWebViewDeveloperTools();
 #endif
 
 		return builder.Build();

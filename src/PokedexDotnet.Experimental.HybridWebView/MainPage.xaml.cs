@@ -13,11 +13,6 @@ public partial class MainPage : ContentPage
 	{
 		InitializeComponent();
 
-#if DEBUG
-		// see: https://github.com/dotnet/maui/issues/22305
-		// Debug Switch is not implemented yet...
-#endif
-
 		this.invokeTarget = new JSInvokeTarget();
 	}
 
