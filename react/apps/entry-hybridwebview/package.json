@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@pokedex-dotnet-react/interop-hybridwebview": "*"
+    "@pokedex-dotnet-react/interop-hybridwebview": "*",
+    "react-router": "7.1.3"
   }
 }
