@@ -24,9 +24,9 @@ export const useFetchPokemon: FunctionType = ({ DataSourceGetter }) => {
 
   React.useEffect(
     function InitializeDataSource() {
-      sendInvokeMessageToDotNetAsync("SetDataSourceGetter", [
-        DataSourceGetterValue,
-      ]);
+      // sendInvokeMessageToDotNetAsync("SetDataSourceGetter", [
+      //   DataSourceGetterValue,
+      // ]);
     },
     [DataSourceGetterValue, sendInvokeMessageToDotNetAsync]
   );

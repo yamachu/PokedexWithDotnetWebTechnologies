@@ -1,12 +1,22 @@
 import { useCapturePokemon } from "@pokedex-dotnet-react/interop-hybridwebview/src/useCapturePokemon";
 import { useFetchPokemon } from "@pokedex-dotnet-react/interop-hybridwebview/src/useFetchPokemon";
 import { useCallback, useEffect, useState } from "react";
+import { Route, Routes } from "react-router";
 
 type Pokemon = Awaited<
   ReturnType<ReturnType<typeof useFetchPokemon>["fetchPokemons"]>
 >;
 
 function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="config" element={<h1>Config</h1>} />
+    </Routes>
+  );
+}
+
+function Index() {
   const [pokemons, setPokemons] = useState<Pokemon>([]);
   const [capturedPokemonIds, setCapturedPokemonIds] = useState<number[]>([]);
   const { fetchPokemons } = useFetchPokemon({
@@ -23,21 +33,21 @@ function App() {
     DataSourceGetter: () => "this value not used in .NET MAUI Blazor",
   });
 
-  useEffect(() => {
-    fetchPokemons().then((pokemons) => {
-      setPokemons(pokemons);
-    });
-  }, [fetchPokemons]);
+  // useEffect(() => {
+  //   fetchPokemons().then((pokemons) => {
+  //     setPokemons(pokemons);
+  //   });
+  // }, [fetchPokemons]);
 
-  useEffect(() => {
-    migration();
-  }, [migration]);
+  // useEffect(() => {
+  //   migration();
+  // }, [migration]);
 
-  useEffect(() => {
-    fetchCapturedPokemons().then((ids) => {
-      setCapturedPokemonIds(ids);
-    });
-  }, [fetchCapturedPokemons]);
+  // useEffect(() => {
+  //   fetchCapturedPokemons().then((ids) => {
+  //     setCapturedPokemonIds(ids);
+  //   });
+  // }, [fetchCapturedPokemons]);
 
   const deleteCaptured = useCallback(
     (id: number) => {
