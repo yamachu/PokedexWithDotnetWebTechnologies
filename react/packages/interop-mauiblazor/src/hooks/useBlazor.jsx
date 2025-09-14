@@ -73,11 +73,25 @@ export function useBlazor(identifier, props) {
   }, [props]);
 
   // This effect will run when the component is about to unmount.
+  // We need to handle React.StrictMode which may run this cleanup multiple times
   useEffect(() => () => {
+    // Prevent multiple disposal calls in React.StrictMode
+    if (isDisposedRef.current) {
+      return;
+    }
+    
     setTimeout(() => {
-      isDisposedRef.current = true;
-      if (addRootComponentPromiseRef.current) {
-        addRootComponentPromiseRef.current.then((rootComponent) => rootComponent.dispose());
+      // Double-check disposal state in case another cleanup already ran
+      if (!isDisposedRef.current && addRootComponentPromiseRef.current) {
+        isDisposedRef.current = true;
+        addRootComponentPromiseRef.current.then((rootComponent) => {
+          // Final check before disposal to handle race conditions
+          if (rootComponent && typeof rootComponent.dispose === 'function') {
+            rootComponent.dispose();
+          }
+        }).catch(() => {
+          // Ignore disposal errors in case component was already disposed
+        });
       }
     }, 1000);
   }, []);
