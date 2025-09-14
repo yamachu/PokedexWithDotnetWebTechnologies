@@ -7,15 +7,9 @@ const BlazorMountPoint = "js-root";
 
 const render = () =>
   ReactDOM.createRoot(document.getElementById(BlazorMountPoint)!).render(
-    import.meta.env.MODE === "development" ? (
-      // FIXME: React.StrictModeは開発モードでuseEffectを2回呼び出して、useEffectの副作用を検出するのに役に立つ
-      // しかしuseEffectが2回呼び出されるとuseEffectのcleanupでBlazor ComponentのDisposeが走るため、外している
+    <React.StrictMode>
       <App />
-    ) : (
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
-    )
+    </React.StrictMode>
   );
 
 // call from Blazor
