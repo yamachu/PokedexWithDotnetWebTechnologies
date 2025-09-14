@@ -73,13 +73,38 @@ export function useBlazor(identifier, props) {
   }, [props]);
 
   // This effect will run when the component is about to unmount.
-  useEffect(() => () => {
-    setTimeout(() => {
-      isDisposedRef.current = true;
-      if (addRootComponentPromiseRef.current) {
-        addRootComponentPromiseRef.current.then((rootComponent) => rootComponent.dispose());
-      }
-    }, 1000);
+  // Handle React.StrictMode properly by using a ref to track if component is actually unmounting
+  const isMountedRef = useRef(true);
+  
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      // Use a short delay to distinguish between StrictMode cleanup and actual unmount
+      const timeoutId = setTimeout(() => {
+        // Only dispose if the component is still marked as unmounted after the delay
+        if (!isMountedRef.current) {
+          isDisposedRef.current = true;
+          if (addRootComponentPromiseRef.current) {
+            addRootComponentPromiseRef.current.then((rootComponent) => rootComponent.dispose());
+          }
+        }
+      }, 100);
+      
+      // Mark as unmounted
+      isMountedRef.current = false;
+      
+      // If the component remounts quickly (StrictMode), clear the timeout
+      const remountTimeoutId = setTimeout(() => {
+        if (isMountedRef.current) {
+          clearTimeout(timeoutId);
+        }
+      }, 50);
+      
+      return () => {
+        clearTimeout(timeoutId);
+        clearTimeout(remountTimeoutId);
+      };
+    };
   }, []);
 
   // Update the previous props with the current props after each render.
